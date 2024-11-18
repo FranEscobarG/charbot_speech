@@ -33,6 +33,10 @@ dependencies:
   http: ^0.13.5  # Asegúrate de usar la versión más reciente posible
   shared_preferences: ^2.0.15 # Añade esta línea
   connectivity_plus: ^2.3.0
+  url_launcher: ^6.1.7
+  local_auth: ^2.2.0
+  speech_to_text: ^7.0.0
+  flutter_tts: ^3.6.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -67,6 +71,7 @@ flutter:
      - asset/img/user.png
      - asset/img/call-center.png
      - asset/img/uplogo.jpg
+     - asset/img/foondoN.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
