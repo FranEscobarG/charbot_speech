@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   List<Map<String, dynamic>> _messages = [];
   bool _isLoading = false;
   bool _isConnected = true;
-  String _languageCode = 'es-US'; // Idioma por defecto en español
+  String _languageCode = 'es-ES'; // Idioma por defecto
 
   final String _apiKey = 'AIzaSyBfWtG6I6Ko1g1uj171eZevIIfOHhwTIXY';
 
@@ -181,14 +181,23 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _launchGitHub() async {
-    final Uri url = Uri.parse('https://github.com/Gerar-do/frontend-ev.git');
+    final Uri url = Uri.parse('https://github.com/Gerar-do/bot-movil.git');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw 'No se pudo abrir el enlace $url';
     }
   }
 
   String _removeMarkdownSyntax(String text) {
-    return text.replaceAll(RegExp(r'\*\*'), '');
+    // Remueve los asteriscos
+    return text.replaceAll(RegExp(r'\*'), '');
+  }
+
+  // Cambiar idioma
+  void _changeLanguage(String languageCode) {
+    setState(() {
+      _languageCode = languageCode;
+      _initializeTextToSpeech(); // Reconfigura el Text to Speech
+    });
   }
 
   void _clearChat() {
@@ -262,7 +271,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.cleaning_services_outlined,
-              color:Colors.red,
+                color: Colors.red,
               ),
               title: const Text("Eliminar historial"),
               onTap: () {
@@ -270,7 +279,14 @@ class _HomePageState extends State<HomePage> {
                 _clearChat();
               },
             ),
-
+            ListTile(
+              leading: const Icon(Icons.language),
+              title: const Text("Cambiar idioma"),
+              onTap: () {
+                Navigator.pop(context);
+                _showLanguageDialog();
+              },
+            ),
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text("Gerardo Jafet Toledo Cañaveral, 211228"),
@@ -280,7 +296,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.code,
-              color: Colors.indigo,
+                color: Colors.indigo,
               ),
               title: const Text("Ir a mi repositorio"),
               onTap: () {
@@ -324,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                               margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                               padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                               decoration: BoxDecoration(
-                                color: isUserMessage ? Color(0xFFC2FFC2) : Color(0xFFF6EFD8),
+                                color: isUserMessage ? const Color(0xFFC2FFC2) : const Color(0xFFF6EFD8),
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                               child: Column(
@@ -400,6 +416,37 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
+    );
+  }
+
+  // Mostrar diálogo de selección de idioma
+  void _showLanguageDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Selecciona el idioma'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                title: const Text('Español'),
+                onTap: () {
+                  _changeLanguage('es-ES');
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: const Text('Inglés'),
+                onTap: () {
+                  _changeLanguage('en-US');
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }
