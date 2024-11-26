@@ -39,7 +39,8 @@ class _HomePageState extends State<HomePage> {
 
   // Inicializar configuración de Text to Speech con idiomas
   void _initializeTextToSpeech() async {
-    await _flutterTts.setLanguage(_languageCode); // Configura el idioma predeterminado
+    await _flutterTts
+        .setLanguage(_languageCode); // Configura el idioma predeterminado
     await _flutterTts.setSpeechRate(0.5);
   }
 
@@ -109,7 +110,8 @@ class _HomePageState extends State<HomePage> {
     String message = _controller.text.trim();
 
     if (message.isNotEmpty) {
-      message = message.replaceAllMapped(RegExp(r'(\S+)'), (match) => '${match[0]} ');
+      message =
+          message.replaceAllMapped(RegExp(r'(\S+)'), (match) => '${match[0]} ');
 
       String timestamp = DateTime.now().toString();
 
@@ -142,14 +144,14 @@ class _HomePageState extends State<HomePage> {
   }
 
   // Modificado para filtrar errores y solo leer el mensaje
-  Future<String> _getBotResponse(List<Map<String, dynamic>> contextMessages) async {
+  Future<String> _getBotResponse(
+      List<Map<String, dynamic>> contextMessages) async {
     final url = Uri.parse(
         'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=$_apiKey');
 
     // Se prepara el contexto con todos los mensajes previos.
-    List<Map<String, dynamic>> parts = contextMessages
-        .map((msg) => {"text": msg['message']})
-        .toList();
+    List<Map<String, dynamic>> parts =
+        contextMessages.map((msg) => {"text": msg['message']}).toList();
 
     final response = await http.post(
       url,
@@ -165,7 +167,8 @@ class _HomePageState extends State<HomePage> {
       try {
         Map<String, dynamic> data = jsonDecode(response.body);
         if (data.containsKey('candidates') && data['candidates'].isNotEmpty) {
-          return data['candidates'][0]['content']['parts'][0]['text']?.trim() ?? 'No response from bot';
+          return data['candidates'][0]['content']['parts'][0]['text']?.trim() ??
+              'No response from bot';
         } else {
           return 'No candidates available in response';
         }
@@ -181,7 +184,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _launchGitHub() async {
-    final Uri url = Uri.parse('');
+    final Uri url =
+        Uri.parse('https://github.com/FranEscobarG/charbot_speech.git');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw 'No se pudo abrir el enlace $url';
     }
@@ -206,7 +210,8 @@ class _HomePageState extends State<HomePage> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text("Confirmación"),
-          content: const Text("¿Estás seguro de que deseas eliminar todo el chat?"),
+          content:
+              const Text("¿Estás seguro de que deseas eliminar todo el chat?"),
           actions: <Widget>[
             TextButton(
               child: const Text("Cancelar"),
@@ -223,7 +228,8 @@ class _HomePageState extends State<HomePage> {
                 _saveMessages();
                 Navigator.of(context).pop();
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("Todo el chat ha sido eliminado.")),
+                  const SnackBar(
+                      content: Text("Todo el chat ha sido eliminado.")),
                 );
               },
             ),
@@ -270,7 +276,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             ListTile(
-              leading: const Icon(Icons.cleaning_services_outlined,
+              leading: const Icon(
+                Icons.cleaning_services_outlined,
                 color: Colors.red,
               ),
               title: const Text("Eliminar historial"),
@@ -295,7 +302,8 @@ class _HomePageState extends State<HomePage> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.code,
+              leading: const Icon(
+                Icons.code,
                 color: Colors.indigo,
               ),
               title: const Text("Ir a mi repositorio"),
@@ -315,10 +323,13 @@ class _HomePageState extends State<HomePage> {
               itemBuilder: (context, index) {
                 bool isUserMessage = _messages[index]['sender'] == 'user';
                 String timestamp = _messages[index]['timestamp'];
-                String message = _removeMarkdownSyntax(_messages[index]['message']);
+                String message =
+                    _removeMarkdownSyntax(_messages[index]['message']);
 
                 return Align(
-                  alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
+                  alignment: isUserMessage
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
                   child: Column(
                     crossAxisAlignment: isUserMessage
                         ? CrossAxisAlignment.end
@@ -332,15 +343,20 @@ class _HomePageState extends State<HomePage> {
                           if (!isUserMessage)
                             const CircleAvatar(
                               radius: 16,
-                              backgroundImage: AssetImage('asset/img/chat-bot.png'),
+                              backgroundImage:
+                                  AssetImage('asset/img/chat-bot.png'),
                             ),
                           if (!isUserMessage) const SizedBox(width: 5),
                           Expanded(
                             child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                              padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                              margin: const EdgeInsets.symmetric(
+                                  vertical: 8.0, horizontal: 16.0),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 5.0, horizontal: 10.0),
                               decoration: BoxDecoration(
-                                color: isUserMessage ? const Color.fromARGB(255, 194, 230, 255) : const Color.fromARGB(255, 216, 226, 246),
+                                color: isUserMessage
+                                    ? const Color.fromARGB(255, 194, 230, 255)
+                                    : const Color.fromARGB(255, 216, 226, 246),
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                               child: Column(
@@ -408,7 +424,8 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.send, color: Color.fromARGB(255, 33, 80, 162)),
+                  icon: const Icon(Icons.send,
+                      color: Color.fromARGB(255, 33, 80, 162)),
                   onPressed: _isConnected ? _sendMessage : null,
                 ),
                 IconButton(
