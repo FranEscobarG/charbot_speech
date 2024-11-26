@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   bool _isConnected = true;
   String _languageCode = 'es-ES'; // Idioma por defecto
 
-  final String _apiKey = 'AIzaSyBfWtG6I6Ko1g1uj171eZevIIfOHhwTIXY';
+  final String _apiKey = 'AIzaSyBKQ8JcvejOkTxjMMyF87_gilg3V53-V1w';
 
   // Inicializar Speech to Text y Text to Speech
   stt.SpeechToText _speech = stt.SpeechToText();
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _launchGitHub() async {
-    final Uri url = Uri.parse('https://github.com/Gerar-do/bot-movil.git');
+    final Uri url = Uri.parse('');
     if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
       throw 'No se pudo abrir el enlace $url';
     }
@@ -264,7 +264,7 @@ class _HomePageState extends State<HomePage> {
               decoration: const BoxDecoration(
                 color: Colors.blue,
                 image: DecorationImage(
-                  image: AssetImage('asset/img/foondoN.jpg'),
+                  image: AssetImage('asset/img/fondo.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -289,7 +289,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ListTile(
               leading: const Icon(Icons.person),
-              title: const Text("Gerardo Jafet Toledo Cañaveral, 211228"),
+              title: const Text("Francisco De Jesus Escobar Gutierrez, 221193"),
               onTap: () {
                 Navigator.pop(context);
               },
@@ -340,7 +340,7 @@ class _HomePageState extends State<HomePage> {
                               margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                               padding: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                               decoration: BoxDecoration(
-                                color: isUserMessage ? const Color(0xFFC2FFC2) : const Color(0xFFF6EFD8),
+                                color: isUserMessage ? const Color.fromARGB(255, 194, 230, 255) : const Color.fromARGB(255, 216, 226, 246),
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
                               child: Column(
@@ -367,7 +367,11 @@ class _HomePageState extends State<HomePage> {
                           if (isUserMessage)
                             const CircleAvatar(
                               radius: 16,
-                              backgroundImage: AssetImage('asset/img/user.png'),
+                              child: Icon(
+                                Icons.person, // Ícono de usuario
+                                size: 50, // Tamaño del ícono
+                                color: Colors.grey, // Color del ícono
+                              ),
                             ),
                         ],
                       ),
@@ -404,7 +408,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.send, color: Colors.lightGreen),
+                  icon: const Icon(Icons.send, color: Color.fromARGB(255, 33, 80, 162)),
                   onPressed: _isConnected ? _sendMessage : null,
                 ),
                 IconButton(

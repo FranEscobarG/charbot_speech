@@ -72,7 +72,7 @@ flutter:
      - asset/img/user.png
      - asset/img/call-center.png
      - asset/img/uplogo.jpg
-     - asset/img/foondoN.jpg
+     - asset/img/fondo.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
